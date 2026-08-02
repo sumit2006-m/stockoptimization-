@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Optimization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">Stock Optimizer</div>
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.products') }}">Products</a>
+        <a href="{{ url_for('main.optimize_page') }}" class="active">Optimization</a>
+        <a href="{{ url_for('main.reports') }}">Reports</a>
+        <a href="{{ url_for('main.about') }}">About</a>
+      </div>
+    </nav>
+
+    <main class="page-shell">
+      <section class="glass-card form-card">
+        <h2>Run Optimization</h2>
+        <form method="post" action="{{ url_for('main.optimize') }}">
+          <div class="grid-2">
+            <label>Available Budget (₹)<input name="budget" type="number" step="0.01" required /></label>
+            <label>Maximum Storage Capacity<input name="capacity" type="number" required /></label>
+          </div>
+          <button class="btn btn-primary" type="submit">Run Optimization</button>
+        </form>
+      </section>
+
+      <section class="glass-card info-card">
+        <h3>Available Products</h3>
+        <ul class="list-soft">
+          {% for product in products %}
+          <li>{{ product.product_name }} — Cost: ₹{{ "%.2f"|format(product.purchase_cost) }} | Profit: ₹{{ "%.2f"|format(product.profit) }} | Storage: {{ product.storage }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">Stock Optimizer</div>
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.products') }}">Products</a>
+        <a href="{{ url_for('main.optimize_page') }}">Optimization</a>
+        <a href="{{ url_for('main.reports') }}">Reports</a>
+        <a href="{{ url_for('main.about') }}" class="active">About</a>
+      </div>
+    </nav>
+
+    <main class="page-shell">
+      <section class="glass-card about-card">
+        <h2>About the Project</h2>
+        <p><strong>Problem:</strong> Companies need to choose stock items that maximize profit while remaining within budget and storage limits.</p>
+        <p><strong>Objective:</strong> Provide a practical demonstration of the 0/1 Knapsack algorithm using a clean web-based interface.</p>
+        <p><strong>Algorithm:</strong> Dynamic Programming helps evaluate combinations efficiently and avoid brute-force search.</p>
+        <p><strong>Working:</strong> Each product contributes to cost, storage, and profit. The system selects the combination that produces the highest profit under constraints.</p>
+        <p><strong>Advantages:</strong> Fast decision support, useful academic demonstration, and simple UI for practical understanding.</p>
+        <p><strong>Future Scope:</strong> Add real-time inventory integration, multi-warehouse planning, and more advanced optimization models.</p>
+      </section>
+    </main>
+  </body>
+</html>

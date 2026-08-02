@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Optimizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">Stock Optimizer</div>
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}" class="active">Home</a>
+        <a href="{{ url_for('main.products') }}">Products</a>
+        <a href="{{ url_for('main.optimize_page') }}">Optimization</a>
+        <a href="{{ url_for('main.reports') }}">Reports</a>
+        <a href="{{ url_for('main.about') }}">About</a>
+      </div>
+    </nav>
+
+    <main class="page-shell">
+      <section class="hero-card glass-card">
+        <div>
+          <h1>Stock Purchase & Storage Cost Optimization System</h1>
+          <p class="hero-copy">
+            This system demonstrates the 0/1 Knapsack Algorithm using dynamic programming to choose the most profitable stock combinations under budget and storage constraints.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ url_for('main.optimize_page') }}">Start Optimization</a>
+            <a class="btn btn-secondary" href="{{ url_for('main.products') }}">Manage Products</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-grid">
+        <article class="glass-card info-card">
+          <h3>Problem Statement</h3>
+          <p>Organizations must choose stock purchases within limited budget and storage resources.</p>
+        </article>
+        <article class="glass-card info-card">
+          <h3>Objectives</h3>
+          <p>Maximize total profit while ensuring cost and storage constraints are respected.</p>
+        </article>
+        <article class="glass-card info-card">
+          <h3>Algorithm Used</h3>
+          <p>Dynamic Programming based 0/1 Knapsack to compute the optimal selection.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">Stock Optimizer</div>
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.products') }}">Products</a>
+        <a href="{{ url_for('main.optimize_page') }}">Optimization</a>
+        <a href="{{ url_for('main.reports') }}">Reports</a>
+        <a href="{{ url_for('main.about') }}">About</a>
+      </div>
+    </nav>
+
+    <main class="page-shell">
+      <section class="glass-card results-grid">
+        <div class="metric-card">
+          <h3>Total Purchase Cost</h3>
+          <p>₹{{ "%.2f"|format(result.total_cost) }}</p>
+        </div>
+        <div class="metric-card">
+          <h3>Total Profit</h3>
+          <p>₹{{ "%.2f"|format(result.total_profit) }}</p>
+        </div>
+        <div class="metric-card">
+          <h3>Remaining Budget</h3>
+          <p>₹{{ "%.2f"|format(result.remaining_budget) }}</p>
+        </div>
+        <div class="metric-card">
+          <h3>Storage Used</h3>
+          <p>{{ result.storage_used }} units</p>
+        </div>
+      </section>
+
+      <section class="glass-card list-card">
+        <h2>Selected Products</h2>
+        <ul class="list-soft">
+          {% for product in result.selected_products %}
+          <li>{{ product.product_name }} — Profit: ₹{{ "%.2f"|format(product.profit) }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="glass-card list-card">
+        <h2>Rejected Products</h2>
+        <ul class="list-soft">
+          {% for product in result.rejected_products %}
+          <li>{{ product.product_name }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="glass-card table-card">
+        <h2>DP Table Preview</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Budget/Storage</th>
+                {% for c in range(0, 6) %}
+                <th>{{ c }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in result.dp_matrix[:6] %}
+              <tr>
+                <td>{{ loop.index0 }}</td>
+                {% for cell in row[:6] %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Time Complexity: {{ result.time_complexity }} | Space Complexity: {{ result.space_complexity }}</p>
+        <p class="note">Optimization Percentage: {{ result.optimization_percentage }}%</p>
+      </section>
+    </main>
+  </body>
+</html>

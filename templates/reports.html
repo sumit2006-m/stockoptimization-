@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">Stock Optimizer</div>
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.products') }}">Products</a>
+        <a href="{{ url_for('main.optimize_page') }}">Optimization</a>
+        <a href="{{ url_for('main.reports') }}" class="active">Reports</a>
+        <a href="{{ url_for('main.about') }}">About</a>
+      </div>
+    </nav>
+
+    <main class="page-shell">
+      <section class="glass-card report-card">
+        <h2>Reports</h2>
+        <p>Export result summaries as CSV or print the report for presentation and review.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="window.print()">Print Report</button>
+          <a class="btn btn-secondary" href="{{ url_for('main.export_csv') }}">Download CSV</a>
+          <a class="btn btn-secondary" href="{{ url_for('main.optimize_page') }}">Generate New Result</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
