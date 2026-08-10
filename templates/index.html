@@ -24,34 +24,85 @@
       </div>
     </nav>
 
-    <main class="page-shell">
-      <section class="hero-card glass-card">
-        <div>
-          <h1>Stock Purchase & Storage Cost Optimization System</h1>
+    <main class="page-shell home-shell">
+      <header class="hero-panel section section-hero" data-section="hero">
+        <div class="hero-copy-wrapper reveal">
+          <span class="eyebrow">Intelligent Stock Planning</span>
+          <h1 class="hero-headline">Optimize purchases. Minimize storage cost. Maximize profit.</h1>
           <p class="hero-copy">
-            This system demonstrates the 0/1 Knapsack Algorithm using dynamic programming to choose the most profitable stock combinations under budget and storage constraints.
+            A premium stock optimization dashboard powered by the 0/1 Knapsack algorithm and dynamic programming, built for modern inventory decisions.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="{{ url_for('main.optimize_page') }}">Start Optimization</a>
-            <a class="btn btn-secondary" href="{{ url_for('main.products') }}">Manage Products</a>
+            <a class="btn btn-secondary" href="{{ url_for('main.products') }}">Browse Products</a>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="hero-card glass-card">
+            <div class="stat-pill">Profit-led decision support</div>
+            <div class="hero-stat">
+              <span>24%</span>
+              <p>Projected value improvement with optimal stock selection</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <nav class="section-nav">
+        <div class="section-nav__items">
+          <a href="#products" class="nav-link active" data-target="#products">Products</a>
+          <a href="#optimize" class="nav-link" data-target="#optimize">Optimize</a>
+          <a href="#reports" class="nav-link" data-target="#reports">Reports</a>
+          <a href="#about" class="nav-link" data-target="#about">About</a>
+        </div>
+        <div class="scroll-progress"><span class="scroll-progress__bar"></span></div>
+      </nav>
+
+      <section class="section section-panel" id="products" data-section="products">
+        <div class="section-content reveal">
+          <span class="eyebrow">Products</span>
+          <h2>Manage stock items with confidence</h2>
+          <p>Organize inventory, pricing, and storage profiles from a single intuitive interface so your optimization always has the best inputs.</p>
+          <div class="section-actions">
+            <a class="btn btn-primary" href="{{ url_for('main.products') }}">Open product manager</a>
           </div>
         </div>
       </section>
 
-      <section class="info-grid">
-        <article class="glass-card info-card">
-          <h3>Problem Statement</h3>
-          <p>Organizations must choose stock purchases within limited budget and storage resources.</p>
-        </article>
-        <article class="glass-card info-card">
-          <h3>Objectives</h3>
-          <p>Maximize total profit while ensuring cost and storage constraints are respected.</p>
-        </article>
-        <article class="glass-card info-card">
-          <h3>Algorithm Used</h3>
-          <p>Dynamic Programming based 0/1 Knapsack to compute the optimal selection.</p>
-        </article>
+      <section class="section section-panel section-alt" id="optimize" data-section="optimize">
+        <div class="section-content reveal">
+          <span class="eyebrow">Optimization</span>
+          <h2>Run the knapsack solver in one click</h2>
+          <p>Set budget and storage limits, then let the algorithm select the highest-value stock combination that fits your constraints.</p>
+          <div class="section-actions">
+            <a class="btn btn-primary" href="{{ url_for('main.optimize_page') }}">Optimize now</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-panel" id="reports" data-section="reports">
+        <div class="section-content reveal">
+          <span class="eyebrow">Results</span>
+          <h2>Review optimization outputs instantly</h2>
+          <p>Inspect results, compare metrics, and turn optimized stock plans into actionable reports with ease.</p>
+          <div class="section-actions">
+            <a class="btn btn-primary" href="{{ url_for('main.reports') }}">View reports</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-panel section-alt" id="about" data-section="about">
+        <div class="section-content reveal">
+          <span class="eyebrow">About</span>
+          <h2>Built around dynamic programming clarity</h2>
+          <p>Learn the story behind the algorithm, the product constraints, and why optimized stock selection is a smarter way to plan your inventory.</p>
+          <div class="section-actions">
+            <a class="btn btn-secondary" href="{{ url_for('main.about') }}">Learn more</a>
+          </div>
+        </div>
       </section>
     </main>
+    <script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scroll3d.js') }}"></script>
   </body>
 </html>

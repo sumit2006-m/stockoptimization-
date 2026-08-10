@@ -57,7 +57,8 @@ def optimize():
     capacity = request.form.get("capacity", 0)
     items = get_products()
     result = optimize_products(items, budget, capacity)
-    return render_template("results.html", result=result, budget=budget, capacity=capacity)
+    # pass products to the template for client-side visualization
+    return render_template("results.html", result=result, budget=budget, capacity=capacity, products=items)
 
 
 @routes.route("/reports")

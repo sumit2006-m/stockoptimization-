@@ -66,16 +66,16 @@
             <thead>
               <tr>
                 <th>Budget/Storage</th>
-                {% for c in range(0, 6) %}
-                <th>{{ c }}</th>
+                {% for s in result.dp_preview_storages %}
+                <th>{{ s }}</th>
                 {% endfor %}
               </tr>
             </thead>
             <tbody>
-              {% for row in result.dp_matrix[:6] %}
+              {% for i in range(result.dp_preview|length) %}
               <tr>
-                <td>{{ loop.index0 }}</td>
-                {% for cell in row[:6] %}
+                <td>{{ result.dp_preview_budgets[i] }}</td>
+                {% for cell in result.dp_preview[i] %}
                 <td>{{ cell }}</td>
                 {% endfor %}
               </tr>
@@ -87,5 +87,6 @@
         <p class="note">Optimization Percentage: {{ result.optimization_percentage }}%</p>
       </section>
     </main>
+    <script src="{{ url_for('static', filename='js/scroll3d.js') }}"></script>
   </body>
 </html>
