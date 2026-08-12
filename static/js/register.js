@@ -68,6 +68,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
+        // create server session for demo
+        const user = auth.currentUser;
+        if (user && user.email) {
+          try {
+            await fetch('/session_login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: user.email })
+            });
+          } catch (err) {
+            console.warn('Session login failed', err);
+          }
+        }
+
         showMessage('Account created. Redirecting...', 'success');
         setTimeout(() => window.location.href = '/', 900);
       } catch (err) {
@@ -81,6 +95,19 @@ document.addEventListener('DOMContentLoaded', () => {
     googleBtn.addEventListener('click', async () => {
       try {
         await signInWithPopup(auth, googleProvider);
+        const user = auth.currentUser;
+        if (user && user.email) {
+          try {
+            await fetch('/session_login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: user.email })
+            });
+          } catch (err) {
+            console.warn('Session login failed', err);
+          }
+        }
+
         showMessage('Google registration successful. Redirecting...', 'success');
         setTimeout(() => window.location.href = '/', 900);
       } catch (err) {

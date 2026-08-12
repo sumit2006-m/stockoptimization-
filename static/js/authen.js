@@ -87,6 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     password
                 );
 
+                // create server session for this demo so protected pages load
+                const user = auth.currentUser;
+                if (user && user.email) {
+                    try {
+                        await fetch('/session_login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: user.email })
+                        });
+                    } catch (err) {
+                        console.warn('Session login failed', err);
+                    }
+                }
+
                 showMessage(
                     "Login successful! Redirecting...",
                     "success"
@@ -121,6 +135,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     auth,
                     googleProvider
                 );
+
+                const user = auth.currentUser;
+                if (user && user.email) {
+                    try {
+                        await fetch('/session_login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: user.email })
+                        });
+                    } catch (err) {
+                        console.warn('Session login failed', err);
+                    }
+                }
 
                 showMessage(
                     "Google login successful! Redirecting...",

@@ -1,5 +1,6 @@
 import csv
 import io
+from functools import wraps
 from flask import Blueprint, jsonify, make_response, render_template, request, redirect, url_for, flash, session
 from models import create_product, delete_product, get_products, update_product
 from algorithms.knapsack import optimize_products
@@ -7,12 +8,23 @@ from algorithms.knapsack import optimize_products
 routes = Blueprint("main", __name__)
 
 
+def login_required(view_func):
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if not session.get("user"):
+            return redirect(url_for("main.login_page"))
+        return view_func(*args, **kwargs)
+    return wrapper
+
+
 @routes.route("/")
+@login_required
 def index():
     return render_template("index.html")
 
 
 @routes.route("/products")
+@login_required
 def products():
     search_query = request.args.get("search", "")
     items = get_products(search_query)
@@ -20,6 +32,7 @@ def products():
 
 
 @routes.route("/products", methods=["POST"])
+@login_required
 def add_product():
     payload = {
         "product_name": request.form.get("product_name"),
@@ -46,12 +59,14 @@ def remove_product(product_id):
 
 
 @routes.route("/optimize")
+@login_required
 def optimize_page():
     items = get_products()
     return render_template("optimize.html", products=items)
 
 
 @routes.route("/optimize", methods=["POST"])
+@login_required
 def optimize():
     budget = request.form.get("budget", 0)
     capacity = request.form.get("capacity", 0)
@@ -62,11 +77,13 @@ def optimize():
 
 
 @routes.route("/reports")
+@login_required
 def reports():
     return render_template("reports.html")
 
 
 @routes.route("/reports/csv")
+@login_required
 def export_csv():
     items = get_products()
     output = io.StringIO()
@@ -106,8 +123,10 @@ def login_email():
         flash("Please provide both email and password.", "error")
         return redirect(url_for("main.login_page"))
 
-    flash("Email login received. Authentication is not configured in this demo.", "info")
-    return redirect(url_for("main.login_page"))
+    # For demo: create a simple session on email login.
+    session["user"] = email
+    flash("Login successful.", "success")
+    return redirect(url_for("main.index"))
 
 
 @routes.route("/login/phone", methods=["POST"])
@@ -172,3 +191,14 @@ def forgot_email():
 
     flash("Password reset requested. Client-side Firebase will handle sending reset emails in this demo.", "info")
     return redirect(url_for("main.login_page"))
+
+
+@routes.route('/session_login', methods=['POST'])
+def session_login():
+    data = request.get_json(silent=True) or request.form
+    email = data.get('email')
+    if not email:
+        return jsonify({'error': 'missing email'}), 400
+
+    session['user'] = email
+    return jsonify({'status': 'ok'})
