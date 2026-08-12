@@ -111,6 +111,10 @@ def about():
 
 @routes.route("/login")
 def login_page():
+    # if user already has a session, send them to the app
+    if session.get("user"):
+        flash("You are already logged in.", "info")
+        return redirect(url_for("main.index"))
     return render_template("login.html", otp_sent=False, phone_number="")
 
 
@@ -161,6 +165,9 @@ def logout():
 
 @routes.route("/register")
 def register_page():
+    if session.get("user"):
+        flash("You are already logged in.", "info")
+        return redirect(url_for("main.index"))
     return render_template("register.html")
 
 
@@ -179,6 +186,9 @@ def register_email():
 
 @routes.route("/forgot")
 def forgot_page():
+    if session.get("user"):
+        flash("You are already logged in.", "info")
+        return redirect(url_for("main.index"))
     return render_template("forgot.html")
 
 

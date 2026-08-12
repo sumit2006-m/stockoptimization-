@@ -21,7 +21,23 @@
         <a href="{{ url_for('main.optimize_page') }}">Optimization</a>
         <a href="{{ url_for('main.reports') }}">Reports</a>
         <a href="{{ url_for('main.about') }}">About</a>
+        {% if session.get('user') %}
+        <div class="profile" id="profileRoot">
+          <button class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-badge">{{ session.get('user')[0]|upper }}</span>
+          </button>
+          <div class="profile-menu" id="profileMenu" aria-hidden="true">
+            <div class="profile-info">
+              <strong>{{ session.get('user') }}</strong>
+            </div>
+            <div class="profile-actions">
+              <a class="text-link" href="{{ url_for('main.logout') }}">Logout</a>
+            </div>
+          </div>
+        </div>
+        {% else %}
         <a href="{{ url_for('main.login_page') }}">Login</a>
+        {% endif %}
       </div>
     </nav>
 
@@ -105,5 +121,6 @@
     </main>
     <script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scroll3d.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
   </body>
 </html>
