@@ -3,6 +3,7 @@ from routes import routes
 from models import init_db, seed_products
 
 app = Flask(__name__)
+app.secret_key = "change-me-to-a-secure-secret"
 app.register_blueprint(routes)
 
 

@@ -1,6 +1,6 @@
 import csv
 import io
-from flask import Blueprint, jsonify, make_response, render_template, request, redirect, url_for
+from flask import Blueprint, jsonify, make_response, render_template, request, redirect, url_for, flash, session
 from models import create_product, delete_product, get_products, update_product
 from algorithms.knapsack import optimize_products
 
@@ -90,3 +90,85 @@ def export_csv():
 @routes.route("/about")
 def about():
     return render_template("about.html")
+
+
+@routes.route("/login")
+def login_page():
+    return render_template("login.html", otp_sent=False, phone_number="")
+
+
+@routes.route("/login/email", methods=["POST"])
+def login_email():
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "").strip()
+
+    if not email or not password:
+        flash("Please provide both email and password.", "error")
+        return redirect(url_for("main.login_page"))
+
+    flash("Email login received. Authentication is not configured in this demo.", "info")
+    return redirect(url_for("main.login_page"))
+
+
+@routes.route("/login/phone", methods=["POST"])
+def login_phone():
+    phone_number = request.form.get("phone_number", "").strip()
+    if not phone_number:
+        flash("Please enter a valid phone number.", "error")
+        return redirect(url_for("main.login_page"))
+
+    flash("OTP sent. This is a placeholder flow; use the demo OTP to continue.", "info")
+    return render_template("login.html", otp_sent=True, phone_number=phone_number)
+
+
+@routes.route("/verify-otp", methods=["POST"])
+def verify_otp():
+    otp = request.form.get("otp", "").strip()
+    if otp == "123456":
+        flash("OTP verified. Login successful.", "success")
+        session["user"] = "demo_user"
+        return redirect(url_for("main.index"))
+
+    flash("Invalid OTP. Use 123456 for the demo.", "error")
+    return render_template("login.html", otp_sent=True, phone_number=request.form.get("phone_number", ""))
+
+
+@routes.route("/logout")
+def logout():
+    session.pop("user", None)
+    flash("You have been logged out.", "info")
+    return redirect(url_for("main.login_page"))
+
+
+@routes.route("/register")
+def register_page():
+    return render_template("register.html")
+
+
+@routes.route("/register/email", methods=["POST"])
+def register_email():
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "").strip()
+
+    if not email or not password:
+        flash("Please provide email and password.", "error")
+        return redirect(url_for("main.register_page"))
+
+    flash("Registration received. Client-side auth (Firebase) is recommended for account creation in this demo.", "info")
+    return redirect(url_for("main.login_page"))
+
+
+@routes.route("/forgot")
+def forgot_page():
+    return render_template("forgot.html")
+
+
+@routes.route("/forgot/email", methods=["POST"])
+def forgot_email():
+    email = request.form.get("email", "").strip()
+    if not email:
+        flash("Please provide an email address.", "error")
+        return redirect(url_for("main.forgot_page"))
+
+    flash("Password reset requested. Client-side Firebase will handle sending reset emails in this demo.", "info")
+    return redirect(url_for("main.login_page"))
